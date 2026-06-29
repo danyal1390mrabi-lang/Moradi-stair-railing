@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرادی — نرده و پله</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2rem;background:white;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:100}
+.logo{font-size:18px;font-weight:600;color:#333;letter-spacing:0.05em}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:14px;color:#666;text-decoration:none;cursor:pointer;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:#000;border-bottom:2px solid #000;padding-bottom:2px}
+.section{display:none}
+.section.active{display:block}
+.hero{padding:4rem 2rem;text-align:center;background:white}
+.hero h1{font-size:14px;letter-spacing:0.15em;color:#999;margin-bottom:0.75rem;font-weight:400;text-transform:uppercase}
+.hero h2{font-size:42px;font-weight:400;color:#000;line-height:1.2;margin-bottom:1rem}
+.hero p{font-size:16px;color:#666;max-width:600px;margin:0 auto;line-height:1.7}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;padding:2rem;background:white;max-width:1200px;margin:0 auto}
+.img-item{cursor:pointer;border-radius:8px;overflow:hidden;background:#eee;aspect-ratio:3/4;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.img-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s}
+.img-item:hover img{transform:scale(1.05)}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center;padding:1rem;overflow:auto}
+.modal.active{display:flex}
+.modal-content{max-width:90%;max-height:90%;background:white;border-radius:4px;padding:0;position:relative}
+.modal-content img{max-width:100%;max-height:80vh;object-fit:contain;display:block}
+.close-btn{position:absolute;top:10px;right:15px;background:white;border:none;color:#000;font-size:32px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.close-btn:hover{background:#f0f0f0}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding:3rem 2rem;background:white;max-width:1200px;margin:0 auto;align-items:center}
+.about-img{background:#eee;height:360px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.about-text h3{font-size:32px;font-weight:400;color:#000;margin-bottom:1rem}
+.about-text p{font-size:15px;color:#666;line-height:1.8;margin-bottom:1rem}
+.stats{display:flex;gap:3rem;margin-top:2rem;padding-top:2rem;border-top:1px solid #ddd}
+.stat{text-align:center}
+.stat-num{font-size:32px;font-weight:600;color:#000}
+.stat-label{font-size:13px;color:#999;margin-top:4px}
+.contact-sec{padding:4rem 2rem;text-align:center;background:white}
+.contact-sec h3{font-size:32px;font-weight:400;color:#000;margin-bottom:1rem}
+.contact-sec p{font-size:16px;color:#666;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+.contact-btn{display:inline-block;padding:12px 40px;border:2px solid #000;color:#000;font-size:14px;border-radius:4px;cursor:pointer;transition:all 0.2s;background:transparent;text-decoration:none}
+.contact-btn:hover{background:#000;color:white}
+.contact-info{margin-top:2rem;display:flex;gap:3rem;justify-content:center;flex-wrap:wrap}
+.contact-item{text-align:center}
+.contact-item-label{font-size:12px;color:#999;margin-bottom:6px;text-transform:uppercase}
+.contact-item-value{font-size:18px;font-weight:500;color:#000;direction:ltr}
+.footer{text-align:center;padding:2rem;font-size:13px;color:#999;border-top:1px solid #ddd;background:white}
+@media(max-width:768px){
+  .about{grid-template-columns:1fr}
+  .nav-links{gap:1rem;font-size:12px}
+  .hero h2{font-size:28px}
+  .stats{flex-direction:column;gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">مرادی · نرده و پله</div>
+  <div class="nav-links">
+    <a class="active" onclick="showSection('work',this)">نمونه‌کارها</a>
+    <a onclick="showSection('about',this)">درباره ما</a>
+    <a onclick="showSection('contact',this)">تماس</a>
+  </div>
+</nav>
+
+<div id="work" class="section active">
+  <div class="hero">
+    <h1>نمونه کارهای اجرا شده</h1>
+    <h2>ساخت و نصب نرده و پله</h2>
+    <p>طراحی و اجرای انواع نرده و پله با متریال‌های استیل، آهن، چوب و شیشه — کیفیت بالا، قیمت مناسب</p>
+  </div>
+  <div class="gallery" id="gallery"></div>
+</div>
+
+<div id="about" class="section">
+  <div class="about">
+    <div class="about-img">
+      <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+        <line x1="25" y1="80" x2="75" y2="25" stroke="#999" stroke-width="2.5"/>
+        <line x1="25" y1="80" x2="25" y2="25" stroke="#999" stroke-width="2"/>
+        <line x1="25" y1="60" x2="38" y2="60" stroke="#999" stroke-width="2"/>
+        <line x1="25" y1="45" x2="50" y2="45" stroke="#999" stroke-width="2"/>
+        <line x1="25" y1="30" x2="62" y2="30" stroke="#999" stroke-width="2"/>
+        <circle cx="25" cy="25" r="5" fill="#999"/>
+        <circle cx="75" cy="25" r="5" fill="#999"/>
+      </svg>
+    </div>
+    <div class="about-text">
+      <h3>مرادی — سازنده نرده و پله</h3>
+      <p>با سال‌ها تجربه در طراحی و اجرای انواع نرده و پله، آماده‌ایم بهترین کیفیت را با مناسب‌ترین قیمت به شما ارائه دهیم.</p>
+      <p>از نرده‌های استیل مدرن تا پله‌های چوبی کلاسیک — هر پروژه‌ای را با دقت و وسواس اجرا می‌کنیم.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">۵۰۰+</div>
+          <div class="stat-label">پروژه اجرا شده</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">۱۵</div>
+          <div class="stat-label">سال تجربه</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">۳۰۰+</div>
+          <div class="stat-label">مشتری راضی</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="section">
+  <div class="contact-sec">
+    <h3>با ما تماس بگیرید</h3>
+    <p>برای مشاوره رایگان، استعلام قیمت و بازدید از پروژه</p>
+    <a class="contact-btn" href="tel:09101510888">تماس بگیرید</a>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-label">تلفن / واتساپ</div>
+        <div class="contact-item-value">09101510888</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">شهر</div>
+        <div class="contact-item-value">یزد</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">© ۱۴۰۴ مرادی — ساخت و نصب نرده و پله</div>
+
+<div id="modal" class="modal">
+  <button class="close-btn" onclick="closeModal()">&times;</button>
+  <div class="modal-content">
+    <img id="modal-img" src="" alt="">
+  </div>
+</div>
+
+<script>
+const images = [
+  {name:"1769063547058.webp", title:"نمونه کار ۱"},
+  {name:"1769063547097.webp", title:"نمونه کار ۲"},
+  {name:"1769063547176.webp", title:"نمونه کار ۳"},
+  {name:"1769063547239.webp", title:"نمونه کار ۴"},
+  {name:"1769063547320.webp", title:"نمونه کار ۵"},
+  {name:"1769063547366.webp", title:"نمونه کار ۶"},
+  {name:"1769063547405.webp", title:"نمونه کار ۷"},
+  {name:"1769063547483.webp", title:"نمونه کار ۸"},
+  {name:"1769063547696.webp", title:"نمونه کار ۹"},
+  {name:"1769063549645.webp", title:"نمونه کار ۱۰"},
+  {name:"1769063549699.webp", title:"نمونه کار ۱۱"},
+  {name:"1769063549846.webp", title:"نمونه کار ۱۲"},
+  {name:"1769063549961.webp", title:"نمونه کار ۱۳"},
+  {name:"1769063550054.webp", title:"نمونه کار ۱۴"},
+  {name:"1769063550077.webp", title:"نمونه کار ۱۵"},
+  {name:"1769063550244.webp", title:"نمونه کار ۱۶"},
+  {name:"1769063550320.webp", title:"نمونه کار ۱۷"},
+  {name:"1769063550344.webp", title:"نمونه کار ۱۸"},
+  {name:"1769063550475.webp", title:"نمونه کار ۱۹"},
+  {name:"1769063550521.webp", title:"نمونه کار ۲۰"},
+  {name:"1769063550641.webp", title:"نمونه کار ۲۱"},
+  {name:"1769063550713.webp", title:"نمونه کار ۲۲"},
+  {name:"1769063550799.webp", title:"نمونه کار ۲۳"},
+  {name:"1769063550868.webp", title:"نمونه کار ۲۴"},
+  {name:"1769063550921.webp", title:"نمونه کار ۲۵"},
+  {name:"1769063551028.webp", title:"نمونه کار ۲۶"},
+  {name:"1769063551212.webp", title:"نمونه کار ۲۷"},
+  {name:"1769063551529.webp", title:"نمونه کار ۲۸"},
+  {name:"1769063551578.webp", title:"نمونه کار ۲۹"},
+  {name:"1769063551692.webp", title:"نمونه کار ۳۰"},
+  {name:"1769063551836.webp", title:"نمونه کار ۳۱"},
+  {name:"1769063551886.webp", title:"نمونه کار ۳۲"},
+  {name:"1769063551936.webp", title:"نمونه کار ۳۳"},
+  {name:"1769063551983.webp", title:"نمونه کار ۳۴"},
+  {name:"1769063552245.webp", title:"نمونه کار ۳۵"},
+  {name:"1769063552315.webp", title:"نمونه کار ۳۶"},
+  {name:"1769063552337.webp", title:"نمونه کار ۳۷"},
+  {name:"1769063552515.webp", title:"نمونه کار ۳۸"},
+  {name:"1769063552796.webp", title:"نمونه کار ۳۹"},
+  {name:"1769063553315.webp", title:"نمونه کار ۴۰"},
+  {name:"1769063553676.webp", title:"نمونه کار ۴۱"},
+  {name:"1769063553787.webp", title:"نمونه کار ۴۲"},
+  {name:"1769063554543.webp", title:"نمونه کار ۴۳"},
+  {name:"1769063554738.webp", title:"نمونه کار ۴۴"},
+  {name:"1769063555444.webp", title:"نمونه کار ۴۵"},
+  {name:"1769063555538.webp", title:"نمونه کار ۴۶"},
+  {name:"1769063555936.webp", title:"نمونه کار ۴۷"},
+  {name:"1769063556035.webp", title:"نمونه کار ۴۸"},
+  {name:"1769063556196.webp", title:"نمونه کار ۴۹"},
+  {name:"1769063939754.webp", title:"نمونه کار ۵۰"},
+  {name:"1769064010116.webp", title:"نمونه کار ۵۱"},
+  {name:"1769064010320.webp", title:"نمونه کار ۵۲"},
+  {name:"1769064010373.webp", title:"نمونه کار ۵۳"},
+  {name:"1769064010454.webp", title:"نمونه کار ۵۴"},
+  {name:"IMG_20230816_141139.webp", title:"نمونه کار ۵۵"},
+  {name:"IMG_20230927_121703.webp", title:"نمونه کار ۵۶"},
+  {name:"IMG_20240209_114407.webp", title:"نمونه کار ۵۷"},
+  {name:"IMG_20240525_172036.webp", title:"نمونه کار ۵۸"},
+  {name:"IMG_20241025_120556.webp", title:"نمونه کار ۵۹"},
+  {name:"IMG_20241224_145633.webp", title:"نمونه کار ۶۰"},
+  {name:"IMG_20250105_122615.webp", title:"نمونه کار ۶۱"},
+  {name:"IMG_20250105_154122.webp", title:"نمونه کار ۶۲"},
+  {name:"IMG_20250908_125403.webp", title:"نمونه کار ۶۳"},
+  {name:"IMG_20251012_174331.webp", title:"نمونه کار ۶۴"},
+  {name:"IMG_20251203_145025.webp", title:"نمونه کار ۶۵"},
+  {name:"IMG_20251220_084912.webp", title:"نمونه کار ۶۶"},
+  {name:"IMG_20260626_105306_947.webp", title:"نمونه کار ۶۷"},
+  {name:"IMG_20260626_105312_484.webp", title:"نمونه کار ۶۸"},
+  {name:"IMG_20260626_105317_537.webp", title:"نمونه کار ۶۹"},
+  {name:"IMG_20260626_105322_395.webp", title:"نمونه کار ۷۰"},
+  {name:"IMG_20260626_105331_384.webp", title:"نمونه کار ۷۱"},
+  {name:"IMG_20260626_105336_015.webp", title:"نمونه کار ۷۲"}
+];
+
+function renderGallery(){
+  const g=document.getElementById('gallery');
+  g.innerHTML=images.map((img,i)=>`
+    <div class="img-item" onclick="openModal(${i})">
+      <img src="${img.name}" alt="${img.title}" loading="lazy" onerror="this.style.display='none'">
+    </div>
+  `).join('');
+}
+
+function openModal(index){
+  const m=document.getElementById('modal');
+  const img=document.getElementById('modal-img');
+  img.src=images[index].name;
+  img.alt=images[index].title;
+  m.classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow='auto';
+}
+
+function showSection(id,link){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  link.classList.add('active');
+}
+
+document.getElementById('modal').onclick=function(e){
+  if(e.target===this)closeModal();
+};
+
+renderGallery();
+</script>
+
+</body>
+</html>
